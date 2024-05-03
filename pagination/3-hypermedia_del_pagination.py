@@ -40,7 +40,12 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
-        """The method returns a dictionary with the following key-value pairs"""
+        """
+        The valid range for the index is from 0 to the length of the dataset
+        minus 1 because in Python list indices start at 0, not 1.
+        Here, because the range function excludes the end value we refer
+        to total_items and not total_items - 1
+        """
         total_items = len(self.dataset())
         assert index in range(0, total_items)
         data = []
