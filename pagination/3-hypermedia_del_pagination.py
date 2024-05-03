@@ -41,19 +41,16 @@ class Server:
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """The method returns a dictionary with the following key-value pairs"""
-        assert isinstance(index, int) and index >= 0
-        assert isinstance(page_size, int) and page_size > 0
-
-        dataset = self.indexed_dataset()
+        total_items = len(self.dataset())
+        assert index in range(0, total_items)
         data = []
-        next_index = index + page_size
-
-        for idx in range(index, next_index):
-            if idx in dataset:
-                data.append(dataset[idx])
+        indexed_data = self.indexed_dataset()
+        for key, value in indexed_data.items():
+            if len(data) <= page_size:
+                data.append(value)
             else:
                 break
-
+        next_index = index + len(data)
 
         return {
             'index': index,
