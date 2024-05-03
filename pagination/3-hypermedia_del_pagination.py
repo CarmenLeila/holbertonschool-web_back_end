@@ -41,19 +41,21 @@ class Server:
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
-        The valid range for the index is from 0 to the length of the dataset
-        minus 1 because in Python list indices start at 0, not 1.
+        The method returns a dictionary with the following key-value pairs
         """
-        total_items = len(self.dataset())
-        assert index in range(0, total_items)
+        assert isinstance(index, int) and index >= 0
+        assert isinstance(page_size, int) and page_size > 0
+        
+        dataset = self.indexed_dataset()
         data = []
-        indexed_data = self.indexed_dataset()
-        for key, value in indexed_data.items():
-            if len(data) <= page_size:
-                data.append(value)
+        next_index = index + page_size
+        
+        for idx in range(index, next_index):
+            if idx in dataset:
+                data.append(dataset[idx])
             else:
                 break
-        next_index = index + len(data)
+
 
         return {
             'index': index,
