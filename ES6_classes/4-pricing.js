@@ -2,7 +2,7 @@ import Currency from './3-currency';
 
 export default class Pricing {
   constructor(amount, currency) {
-    if (typeof amount != 'number' ) {
+    if (typeof amount !== 'number') {
       throw new TypeError('Amount must be a number');
     }
     if (!(currency instanceof Currency)) {
@@ -23,6 +23,7 @@ export default class Pricing {
       this._amount = newAmount;
     }
   }
+
   get currency() {
     return this._currency;
   }
