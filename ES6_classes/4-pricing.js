@@ -2,7 +2,7 @@ import Currency from './3-currency';
 
 export default class Pricing {
   constructor(amount, currency) {
-    if (typeof amount !== 'number') {
+    if (typeof amount != 'number' ) {
       throw new TypeError('Amount must be a number');
     }
     if (!(currency instanceof Currency)) {
@@ -22,4 +22,24 @@ export default class Pricing {
     } else {
       this._amount = newAmount;
     }
+  }
+  get currency() {
+    return this._currency;
+  }
+
+  set currency(newCurrency) {
+    if (!(newCurrency instanceof Currency)) {
+      throw new TypeError('Currency must be a currency');
+    } else {
+      this._currency = newCurrency;
+    }
+  }
+
+  displayFullPrice() {
+    return `${this._amount} ${this._currency.name} (${this._currency.code})`;
+  }
+
+  static convertPrice(amount, conversionRate) {
+    return amount * conversionRate;
+  }
 }
